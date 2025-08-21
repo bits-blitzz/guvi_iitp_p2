@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Score Prediction Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            border-left: 4px solid;
+        }
+        .border-blue-500 { border-color: #3b82f6; }
+        .border-green-500 { border-color: #22c55e; }
+        .border-red-500 { border-color: #ef4444; }
+        .border-purple-500 { border-color: #8b5cf6; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-900">Student Score Prediction Model</h1>
+            <p class="text-lg text-gray-600 mt-2">An analysis of student performance based on study habits.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Section: Model Performance -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-600 pl-4">Model Performance Metrics</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- R-Squared Card -->
+                    <div class="card p-6 stat-card border-blue-500">
+                        <h3 class="text-lg font-semibold text-gray-500">R-Squared (R²)</h3>
+                        <p class="text-4xl font-bold mt-2">{{ metrics.r2 }}</p>
+                        <p class="text-sm text-gray-500 mt-2">Indicates that our model explains {{ (metrics.r2|float * 100)|round }}% of the variability in exam scores.</p>
+                    </div>
+                    <!-- RMSE Card -->
+                    <div class="card p-6 stat-card border-green-500">
+                        <h3 class="text-lg font-semibold text-gray-500">Root Mean Squared Error (RMSE)</h3>
+                        <p class="text-4xl font-bold mt-2">{{ metrics.rmse }}</p>
+                        <p class="text-sm text-gray-500 mt-2">The average prediction error, in points, on the exam.</p>
+                    </div>
+                    <!-- MSE Card -->
+                    <div class="card p-6 stat-card border-red-500">
+                        <h3 class="text-lg font-semibold text-gray-500">Mean Squared Error (MSE)</h3>
+                        <p class="text-4xl font-bold mt-2">{{ metrics.mse }}</p>
+                        <p class="text-sm text-gray-500 mt-2">The average of the squares of the errors.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: New Prediction Example -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 border-l-4 border-purple-600 pl-4">Example Prediction</h2>
+                <div class="card p-6 stat-card border-purple-500">
+                    <p class="text-lg">A student who studied for <strong class="text-purple-700">{{ prediction.hours }} hours</strong> with <strong class="text-purple-700">{{ prediction.attendance }}% attendance</strong> is predicted to score:</p>
+                    <p class="text-5xl font-bold text-gray-900 mt-3">{{ prediction.score }}</p>
+                </div>
+            </section>
+
+            <!-- Section: Visualizations -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-6 border-l-4 border-gray-600 pl-4">Data Visualizations</h2>
+                <div class="space-y-8">
+                    <!-- Exploratory Analysis Plot -->
+                    <div class="card p-4">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Exploratory Analysis</h3>
+                        <img src="{{ plots.exploratory }}" alt="Exploratory Analysis Plots" class="w-full h-auto rounded-lg">
+                    </div>
+                    <!-- Actual vs. Predicted Plot -->
+                    <div class="card p-4">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Model Accuracy: Actual vs. Predicted Scores</h3>
+                        <img src="{{ plots.actual_vs_predicted }}" alt="Actual vs. Predicted Scores" class="w-full h-auto rounded-lg">
+                    </div>
+                    <!-- Residual Plot -->
+                    <div class="card p-4">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Model Diagnostics: Residual Plot</h3>
+                        <img src="{{ plots.residuals }}" alt="Residual Plot" class="w-full h-auto rounded-lg">
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 py-4 border-t">
+            <p class="text-gray-500">Data Analytics Project | Student Score Prediction</p>
+        </footer>
+    </div>
+</body>
+</html>
